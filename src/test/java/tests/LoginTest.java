@@ -1,26 +1,39 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
+import pages.LoginPage;
 
 public class LoginTest extends BaseTest  {
 	
 	@Test
-	public void openWebsiteTest() {
-		System.out.println("Website Open sucessfully");
+	public void validLoginTest() {
+		LoginPage loginPage = new LoginPage(driver);
+	    
+		loginPage.login("standard_user", "secret_sauce");
+		
+		// validation
+		String curentUrl = driver.getCurrentUrl();
+		Assert.assertTrue(curentUrl.contains("Inventory"));
+		
+	
 	}
 	
 	@Test
-	public void verifyTitle() {
-		String title = driver.getTitle();
-		System.out.println(title);
+	public void invalidLoginTest() {
+
+	    LoginPage loginPage = new LoginPage(driver);
+
+	    loginPage.login("wrong_user", "wrong_pass");
+
+	    String currentUrl = driver.getCurrentUrl();
+	    Assert.assertFalse(currentUrl.contains("inventory"));
 	}
 	
-	@Test
-	public void verifyURL() {
-		String url = driver.getCurrentUrl();
-		System.out.println(url);
-	}
+	
+	
+	
 
 }
