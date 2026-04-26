@@ -8,20 +8,17 @@ public class LoginPage {
 	WebDriver driver;
 	
 	// Locators
-	By Username = By.id("user-name");
-	By Password = By.xpath("//input[@id='password']");
-	By LoginBtn = By.id("login-button");
-	
-	// Constructor
-	public LoginPage(WebDriver driver) {
-		this.driver = driver;
-		}
+	By username = By.id("user-name");
+    By password = By.id("password");
+    By loginBtn = By.id("login-button");
 
-	// Actions
-	public void login(String user, String pass) {
-		driver.findElement(Username).sendKeys("user");
-		driver.findElement(Password).sendKeys("pass");
-		driver.findElement(LoginBtn).click();
-	}
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+    }
 
+    public void login(String user, String pass) {
+        driver.findElement(username).sendKeys(user);
+        driver.findElement(password).sendKeys(pass);
+        driver.findElement(loginBtn).click();
+    }
 }
