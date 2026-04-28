@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import utils.WaitUtils;
+
 public class HomePage {
 	
 	WebDriver driver;
@@ -19,13 +21,17 @@ public class HomePage {
 	
 	// Action
 	public void addProducttoCart() {
+		WaitUtils wait = new WaitUtils(driver);
+		wait.waitForEleemnt(addtocartBtn);
 		driver.findElement(addtocartBtn).click();
+		
 		
 	}
 	
 	public void clickCart() {
 		driver.findElement(carticon).click();
 	}
+	
 	
 	
 	

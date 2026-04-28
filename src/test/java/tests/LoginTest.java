@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
@@ -8,32 +9,34 @@ import pages.LoginPage;
 
 public class LoginTest extends BaseTest  {
 	
-	@Test
-	public void validLoginTest() {
+	@Test(dataProvider = "loginData")
+	public void loginTest(String username, String password) {
+		
 		LoginPage loginPage = new LoginPage(driver);
-	    
-		loginPage.login("standard_user", "secret_sauce");
+		loginPage.login(username, password);
 		
-		// validation
-		String curentUrl = driver.getCurrentUrl();
-		Assert.assertTrue(curentUrl.contains("Inventory"));
+		String currentUrl = driver.getCurrentUrl();
 		
-	
+		if(username.equals("standard_user") && password.equals("secret_sauce")) {
+			Assert.assertTrue(currentUrl.contains("inventory"));
+		} 
+		else {
+			Assert.assertFalse(currentUrl.contains("inventory"));
+		}
+		
 	}
 	
-	@Test
-	public void invalidLoginTest() {
-
-	    LoginPage loginPage = new LoginPage(driver);
-
-	    loginPage.login("wrong_user", "wrong_pass");
-
-	    String currentUrl = driver.getCurrentUrl();
-	    Assert.assertFalse(currentUrl.contains("inventory"));
-	}
-	
+	@DataProvider
+	public Object[][] loginData() {
+		return new Object[][] {
+			{"standard_user", "secret_sauce"},
+            {"locked_out_user", "secret_sauce"},
+            {"invalid_user", "wrong_pass"}
+        };
+		}
 	
 	
 	
 
 }
+
